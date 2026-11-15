@@ -1535,6 +1535,7 @@ details[open] > summary > .icon {
   opacity: 1;
   visibility: visible;
 }
+.motion-off,
 .motion-off *,
 .motion-off *:before,
 .motion-off *:after {
@@ -1542,7 +1543,7 @@ details[open] > summary > .icon {
   transition: none !important;
   scroll-behavior: auto !important;
 }
-.motion-off .reveal {
+.js.motion-off .reveal {
   opacity: 1;
   transform: none;
 }
