@@ -1,0 +1,11 @@
+{
+  "name": "bccl-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BCCL official website — dependency-free static GitHub Pages site",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/preview.mjs",
+    "check": "node --check app.js && node scripts/check.mjs"
+  }
+}

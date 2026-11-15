@@ -1,0 +1,8 @@
+Boat Chris Craft Launcher.exe
+*.exe
+.repository/
+node_modules/
+.preview/
+test-results/
+.DS_Store
+Thumbs.db
