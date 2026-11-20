@@ -24,6 +24,8 @@ npm run check
 
 启动器 EXE 作为本仓库 GitHub Release 附件发布，不加入 Git 历史。
 
+下载文件名为 `BoatChrisCraftLauncher-windowsx64.exe`，页面链接与 GitHub Release 附件名称保持一致。当前发布包内置 Microsoft .NET Desktop Runtime 8.0.31（Windows x64）及 .NET Runtime 8.0.31；联机界面需要 Microsoft Edge WebView2 Evergreen Runtime（x64），Minecraft 所需 Java 按游戏版本另行准备。FAQ 已分别说明各运行环境。
+
 1. 在 Releases 中上传新的 Windows x64 EXE。
 2. 更新 `index.html` 的三个下载链接、版本号、大小、版本说明链接及 SHA-256（包括复制按钮的 `data-hash`）。
 3. 核对可执行文件的版本与 SHA-256 后运行检查。
