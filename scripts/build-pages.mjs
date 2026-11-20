@@ -22,7 +22,7 @@ const supportedNames = [
 
 async function fetchReleases(repo) {
   const headers = { Accept: "application/vnd.github+json" };
-  if (repo === siteRepo && process.env.GH_TOKEN) {
+  if (process.env.GH_TOKEN) {
     headers.Authorization = `Bearer ${process.env.GH_TOKEN}`;
   }
   const response = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=100`, {
