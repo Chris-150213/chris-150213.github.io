@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
 import { readFile, access } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { categories, bccl, launchers } from "../comparison-data.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-const pages = ["index.html", "compare.html"];
+const pages = ["index.html", "compare.html", "downloads/index.html"];
+const downloadPath = resolve(root, "downloads/BoatChrisCraftLauncher-windowsx64.exe");
 let totalIds = 0;
 for (const page of pages) {
   const html = await readFile(resolve(root, page), "utf8");
@@ -15,11 +16,13 @@ for (const page of pages) {
   for (const [, ref] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     if (ref.startsWith("#"))
       assert(ids.includes(ref.slice(1)), `${page}: missing ${ref}`);
-    else if (ref.startsWith("./")) {
+    else if (ref.startsWith("./") || ref.startsWith("../")) {
       const [path, anchor] = ref.split("#");
-      await access(resolve(root, path));
+      const targetPath = resolve(root, dirname(page), path);
+      if (targetPath === downloadPath) continue; // The Pages build provides the verified EXE.
+      await access(targetPath);
       if (anchor) {
-        const target = await readFile(resolve(root, path), "utf8");
+        const target = await readFile(targetPath, "utf8");
         assert(
           target.includes(`id="${anchor}"`),
           `${page}: missing target ${ref}`,
@@ -41,7 +44,7 @@ for (const page of pages) {
       );
   }
   assert(
-    html.includes('href="./assets/icon.ico"'),
+    html.includes('assets/icon.ico"'),
     `${page}: original icon must be used`,
   );
   assert(
@@ -55,8 +58,7 @@ for (const page of pages) {
 }
 const html = await readFile(resolve(root, "index.html"), "utf8");
 const codeFiles = [
-  "index.html",
-  "compare.html",
+  ...pages,
   "styles.css",
   "app.js",
   "themes.js",
@@ -86,7 +88,7 @@ const links = [...html.matchAll(/href="([^"]+\.exe)"/g)].map(
   (match) => match[1],
 );
 assert(
-  links.length >= 3 && new Set(links).size === 1,
+  links.length >= 3 && links.every(link => link === "./downloads/BoatChrisCraftLauncher-windowsx64.exe"),
   "Header, hero and section must download the same file",
 );
 assert.equal(categories.length, 4);
@@ -111,5 +113,5 @@ assert.equal(
   "Six palettes, each with light and dark variants",
 );
 console.log(
-  `PASS: 2 pages, ${totalIds} unique IDs, local assets, anchors, ARIA, 12 themes, 3 opponents × 4 categories, two BCCL tradeoffs, downloads and animation lifecycle.`,
+  `PASS: ${pages.length} pages, ${totalIds} unique IDs, local assets, anchors, ARIA, 12 themes, 3 opponents × 4 categories, two BCCL tradeoffs, downloads and animation lifecycle.`,
 );

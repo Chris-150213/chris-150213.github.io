@@ -18,19 +18,15 @@ npm start
 npm run check
 ```
 
-将网站文件提交到 `main`，GitHub Pages 从仓库根目录发布。页面所有本地资源均使用相对路径，可放在根目录或子目录。无需 `node_modules`，不要将本机路径、账号配置或凭据加入仓库。
+将网站文件提交到 `main` 后，GitHub Actions 会生成 `dist/` 并发布到 GitHub Pages。页面资源均使用相对路径，构建脚本无需安装第三方依赖。
 
 ## 更新启动器下载
 
-启动器 EXE 作为本仓库 GitHub Release 附件发布，不加入 Git 历史。
+在启动器仓库或官网仓库的 GitHub Releases 发布新版，附上 Windows x64 EXE 即可。标签用 `v0.2.3-alpha` 这类版本号，附件可用 `Boat Chris Craft Launcher.exe` 或 `BoatChrisCraftLauncher-windowsx64.exe`。
 
-下载文件名为 `BoatChrisCraftLauncher-windowsx64.exe`，页面链接与 GitHub Release 附件名称保持一致。当前发布包内置 Microsoft .NET Desktop Runtime 8.0.31（Windows x64）及 .NET Runtime 8.0.31；联机界面需要 Microsoft Edge WebView2 Evergreen Runtime（x64），Minecraft 所需 Java 按游戏版本另行准备。FAQ 已分别说明各运行环境。
+官网每 15 分钟检查两个仓库，按发布时间选择最近一个已公开发布、含匹配附件的版本。工作流核对文件大小、SHA-256 与 Windows x64 架构，读取内置 .NET 版本，再一起部署下载文件、版本号、校验值和版本说明。失败时保留上次成功部署的版本。
 
-1. 在 Releases 中上传新的 Windows x64 EXE。
-2. 更新 `index.html` 的三个下载链接、版本号、大小、版本说明链接及 SHA-256（包括复制按钮的 `data-hash`）。
-3. 核对可执行文件的版本与 SHA-256 后运行检查。
-
-本页 Alpha 0.2.2 对应文件大小为 249,778,250 字节（238.2 MiB），SHA-256 为 `ee3b699b3c4f88e376ea925e707505d901e813ab247061b717abbe992604fc23`。功能介绍依据所提供的 EXE 元数据及配套源码；功能预览为明确标注的网页界面示意，不是程序截图。未采用草稿更新日志中尚未对应本 EXE 的 0.2.3 版本号。
+下载入口为 `https://bccl.dpdns.org/downloads/`，文件名为 `BoatChrisCraftLauncher-windowsx64.exe`。如需立即同步，可在官网仓库的 Actions 中运行 **Sync launcher and publish website**。排查时可用 `node scripts/build-pages.mjs` 在本地生成带下载文件的网站副本。
 
 ## 动画与无障碍
 
