@@ -24,7 +24,7 @@ npm run check
 
 在启动器仓库或官网仓库的 GitHub Releases 发布新版，附上 Windows x64 EXE 即可。标签用 `v0.2.3-alpha` 这类版本号，附件可用 `Boat Chris Craft Launcher.exe` 或 `BoatChrisCraftLauncher-windowsx64.exe`。
 
-官网每 15 分钟检查两个仓库，按发布时间选择最近一个已公开发布、含匹配附件的版本。工作流核对文件大小、SHA-256 与 Windows x64 架构，读取内置 .NET 版本，再一起部署下载文件、版本号、校验值和版本说明。失败时保留上次成功部署的版本。
+官网在每小时的 00、05、10、15 等分钟检查两个仓库，按发布时间选择最近一个已公开发布、含匹配附件的版本。工作流核对文件大小、SHA-256 与 Windows x64 架构，读取内置 .NET 版本，再一起部署下载文件、版本号、校验值和版本说明。失败时保留上次成功部署的版本。
 
 下载入口为 `https://bccl.dpdns.org/downloads/`，文件名为 `BoatChrisCraftLauncher-windowsx64.exe`。如需立即同步，可在官网仓库的 Actions 中运行 **Sync launcher and publish website**。排查时可用 `node scripts/build-pages.mjs` 在本地生成带下载文件的网站副本。
 
