@@ -6,6 +6,6 @@
   "type": "module",
   "scripts": {
     "start": "node scripts/preview.mjs",
-    "check": "node --check app.js && node scripts/check.mjs"
+    "check": "node --check app.js && node --check themes.js && node --check compare.js && node scripts/check.mjs"
   }
 }
